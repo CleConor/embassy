@@ -319,7 +319,7 @@ impl<'d> BufferedUarte<'d> {
         irq.unpend();
         unsafe { irq.enable() };
         r.enable().write(|w| w.set_enable(vals::Enable::ENABLED));
-        irq.pend();
+        //irq.pend();
 
         state.tx_rx_refcount.store(2, Ordering::Relaxed);
 
