@@ -183,6 +183,7 @@ impl<'d> Twim<'d> {
 
         T::Interrupt::unpend();
         unsafe { T::Interrupt::enable() };
+        T::Interrupt::pend();
 
         twim
     }
