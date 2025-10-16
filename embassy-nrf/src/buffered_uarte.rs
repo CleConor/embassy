@@ -316,9 +316,10 @@ impl<'d> BufferedUarte<'d> {
         let tx = BufferedUarteTx::new_innerer(unsafe { peri.clone_unchecked() }, txd, cts, tx_buffer);
         let rx = BufferedUarteRx::new_innerer(peri, timer, ppi_ch1, ppi_ch2, ppi_group, rxd, rts, rx_buffer);
 
+        irq.unpend();
+        unsafe { irq.enable() };
         r.enable().write(|w| w.set_enable(vals::Enable::ENABLED));
         irq.pend();
-        unsafe { irq.enable() };
 
         state.tx_rx_refcount.store(2, Ordering::Relaxed);
 
